@@ -6,7 +6,7 @@ jest.mock('axios');
 
 describe('throttledGetDataFromApi', () => {
   const testPath = '/test/1';
-  const testResponse = { data: { id: 1, title: 'Test' } };
+  const testResponse = { payload: { id: 1 } };
   beforeEach(() => {
     jest.clearAllMocks();
     jest.useFakeTimers();
