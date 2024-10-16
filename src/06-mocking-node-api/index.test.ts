@@ -85,25 +85,37 @@ describe('doStuffByInterval', () => {
 
 describe('readFileAsynchronously', () => {
   const mockFile = 'mockFile.txt';
+  const mockPath = 'qwertyuiop/mockFile.txt';
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+    (join as jest.Mock).mockReturnValue(mockPath);
+  });
 
   test('should call join with pathToFile', async () => {
-    const mockPath = 'qwertyuiop/mockFile.txt';
+    (existsSync as jest.Mock).mockReturnValue(true);
+    (readFile as jest.Mock).mockResolvedValue(Buffer.from('mock file content'));
 
-    (join as jest.Mock).mockReturnValue(mockPath);
+    await readFileAsynchronously(mockFile);
+
+    expect(join).toHaveBeenCalledWith(__dirname, mockFile);
+  });
+
+  test('should return null if file does not exist', async () => {
+    (existsSync as jest.Mock).mockReturnValue(false);
+    (readFile as jest.Mock).mockResolvedValue(Buffer.from('mock file content'));
+
+    const result = await readFileAsynchronously(mockFile);
+
+    expect(result).toBe(null);
+  });
+
+  test('should return file content if file exists', async () => {
     (existsSync as jest.Mock).mockReturnValue(true);
     (readFile as jest.Mock).mockResolvedValue(Buffer.from('mock file content'));
 
     const result = await readFileAsynchronously(mockFile);
 
-    expect(join).toHaveBeenCalledWith(__dirname, mockFile);
     expect(result).toBe('mock file content');
-  });
-
-  test('should return null if file does not exist', async () => {
-    // Write your test here
-  });
-
-  test('should return file content if file exists', async () => {
-    // Write your test here
   });
 });
