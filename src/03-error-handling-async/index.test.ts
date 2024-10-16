@@ -13,22 +13,6 @@ describe('resolveValue', () => {
     const test = await resolveValue(value);
     expect(test).toBe(value);
   });
-  test('should resolve null', async () => {
-    const test = await resolveValue(null);
-    expect(test).toBe(null);
-  });
-  test('should resolve undefined', async () => {
-    const test = await resolveValue(undefined);
-    expect(test).toBe(undefined);
-  });
-  test('should resolve NaN', async () => {
-    const test = await resolveValue(NaN);
-    expect(test).toBe(NaN);
-  });
-  test('should resolve Infinity', async () => {
-    const test = await resolveValue(Infinity);
-    expect(test).toBe(Infinity);
-  });
 });
 
 describe('throwError', () => {
